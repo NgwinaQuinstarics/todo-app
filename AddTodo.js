@@ -8,52 +8,55 @@ export default function AddTodo({ submitHandler }) {
     setText(val);
   };
 
-  const submit = () => {
-    submitHandler(text);
-    setText('');
+  const handleAdd = () => {
+    if (text.trim().length > 0) {
+      submitHandler(text);
+      setText('');
+    }
   };
 
   return (
-    <View style={styles.inputContainer}>
+    <View style={styles.container}>
       <TextInput
-        placeholder="New task..."
         style={styles.input}
+        placeholder="Add a new task..."
+        placeholderTextColor="#999"
         onChangeText={changeHandler}
         value={text}
       />
 
-      <TouchableOpacity onPress={submit} style={styles.addButton}>
-        <Text style={styles.addText}>+</Text>
+      <TouchableOpacity style={styles.button} onPress={handleAdd}>
+        <Text style={styles.buttonText}>Add Todo</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    flexDirection: 'row',
+  container: {
     marginTop: 20,
-    alignItems: 'center',
   },
+
   input: {
-    flex: 1,
     borderWidth: 1,
-    borderColor: '#bbb',
-    padding: 10,
-    borderRadius: 8,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    padding: 12,
+    fontSize: 16,
+    backgroundColor: '#f5f5f5',
   },
-  addButton: {
-    marginLeft: 10,
+
+  button: {
+    marginTop: 10,
     backgroundColor: 'crimson',
-    width: 45,
-    height: 45,
-    borderRadius: 25,
-    justifyContent: 'center',
+    padding: 14,
+    borderRadius: 10,
     alignItems: 'center',
   },
-  addText: {
-    color: 'white',
-    fontSize: 24,
+
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });
