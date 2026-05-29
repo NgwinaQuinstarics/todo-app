@@ -1,6 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { FlatList, StyleSheet, View, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+
+import { StatusBar } from 'expo-status-bar';
 
 import Header from './Header';
 import TodoItem from './TodoItem';
@@ -14,50 +22,42 @@ export default function App() {
   ]);
 
   const pressHandler = (key) => {
-    setTodos((prevTodos) => {
-      return prevTodos.filter(todo => todo.key !== key);
-    });
+    setTodos((prev) => prev.filter((todo) => todo.key !== key));
   };
 
   const submitHandler = (text) => {
     if (text.length > 3) {
-      setTodos((prevTodos) => {
-        return [
-          { text: text, key: Math.random().toString() },
-          ...prevTodos,
-        ];
-      });
+      setTodos((prev) => [
+        { text, key: Math.random().toString() },
+        ...prev,
+      ]);
     } else {
       Alert.alert('OOPS!', 'Task must be longer than 3 characters');
     }
   };
 
   return (
-
-    <touchableWithoutFeedback onPress={() =>{ Keyboard.dismiss() }}>
-
-
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-      <Header />
+        <StatusBar style="auto" />
 
-      <View style={styles.content}>
-        <AddTodo submitHandler={submitHandler} />
+        <Header />
 
-        <View style={styles.list}>
-          <FlatList
-            data={todos}
-            keyExtractor={(item) => item.key}
-            renderItem={({ item }) => (
-              <TodoItem item={item} pressHandler={pressHandler} />
-            )}
-          />
+        <View style={styles.content}>
+          <AddTodo submitHandler={submitHandler} />
+
+          <View style={styles.list}>
+            <FlatList
+              data={todos}
+              keyExtractor={(item) => item.key}
+              renderItem={({ item }) => (
+                <TodoItem item={item} pressHandler={pressHandler} />
+              )}
+            />
+          </View>
         </View>
       </View>
-
-      <StatusBar style="auto" />
-    </View>
-    </touchableWithoutFeedback>
-    
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-    padding: 40,
+    padding: 30,
   },
   list: {
     marginTop: 20,
